@@ -9,7 +9,7 @@ public class slapsGame extends JFrame implements ActionListener{
 	 menu.setVisible(true);
 
 	}// ends main 
-	public slapsGame(){
+	public slapsGame(){ 
 		Container cPane;
 		
 		setSize(500,500);
