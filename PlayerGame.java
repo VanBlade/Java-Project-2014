@@ -2,7 +2,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-
 public class PlayerGame extends JFrame implements ActionListener{
 	
 	int slapDelay= 3000;
@@ -10,8 +9,14 @@ public class PlayerGame extends JFrame implements ActionListener{
 	JButton move;
 	Timer reactTimer;
 	Timer slapTimer;
-	public PlayerGame(){
+	boolean dodgeStatus= false;	
+	ImageIcon handsImage;
+	ImageIcon hitImage;
+	ImageIcon attackImage;
+	JLabel imageLabel;
 		
+	public PlayerGame(){
+
 		Container cPane;
         
         cPane = getContentPane();
@@ -22,6 +27,15 @@ public class PlayerGame extends JFrame implements ActionListener{
         setLocation(250,200);
         setTitle("Game Start");
         
+        handsImage = new ImageIcon("DefaultHands.png");
+      	hitImage = new ImageIcon("HitHands.png");
+      	attackImage = new ImageIcon("AttackHands.png");
+       		 
+     
+        JLabel imageLabel = new JLabel(handsImage);
+        imageLabel.setBounds(0,50,500,200);
+        cPane.add(imageLabel);
+        
         move= new JButton("Ready?");
         move.setBounds(200,200,120,40);
         move.addActionListener(this);
@@ -31,37 +45,51 @@ public class PlayerGame extends JFrame implements ActionListener{
  		slapTimer = new Timer(slapDelay,this);
         reactTimer = new Timer(reactDelay,this);
 		slapTimer.start();
+		
 
-	}// ends constructor
+
+	}
 	
 	public void actionPerformed(ActionEvent e){
-  		String  buttonName;
-        buttonName = e.getActionCommand(); 
+
 		if(e.getSource()==slapTimer){
+		dodgeStatus =true;
 		move.setText("DODGE!!");
 		reactTimer.start();
 		slapTimer.stop();
-		}
+	   	imageLabel.setIcon(attackImage);
+		
+		}// ends if
 		
 		if(e.getSource()==reactTimer){
 		 move.setText("Game Over");
 		 reactTimer.stop();
 		 slapTimer.stop();
-		}
+		 move.removeActionListener(this);
+		 imageLabel.setIcon(hitImage);
 		
-	   	if(e.getSource()==move){	
-		slapTimer.restart();
-		reactTimer.stop();
-		move.setText("Ready?");
+		}//ends if
 		
-	   	}
+	   	if(e.getSource()==move){
+	 	  	if(dodgeStatus ==true ){
+			slapTimer.restart();
+			reactTimer.stop();
+			move.setText("Ready?");
+			dodgeStatus =false;	
+			imageLabel.setIcon(handsImage);
+		
+	 	  	}
+			else{
+			 move.setText("Game Over");
+			 reactTimer.stop();
+		 	 slapTimer.stop();
+		 	 move.removeActionListener(this);
+		 	  	imageLabel.setIcon(hitImage);
+			}
 	   	
-	   	 if(buttonName.equals("Ready?")){
-		 move.setText("Game Over");
-		 reactTimer.stop();
-		 slapTimer.stop();
-		}
-	}
+	   	}// ends if 
+	   	 
+	}// ends ActionPerformed 
 	
 	
 }// ends Class

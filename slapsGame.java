@@ -21,6 +21,11 @@ public class slapsGame extends JFrame implements ActionListener{
 		cPane = getContentPane();
         cPane.setLayout(null);
         
+
+        JLabel	imageLabel = new JLabel(new ImageIcon("TitleImage.png"));
+        imageLabel.setBounds(0,50,500,200);
+        cPane.add(imageLabel);
+        
          JButton   game= new JButton("Start Game");
         game.setBounds(200,250,120,40);
 	   game.addActionListener(this);
@@ -35,7 +40,11 @@ public class slapsGame extends JFrame implements ActionListener{
         quit.setBounds(200,350,120,40);
 	   quit.addActionListener(this);
         cPane.add(quit);
-        JLabel gameTitle= new JLabel();
+       /* JLabel gameTitle= new JLabel("AJAOPAPO");
+        gameTitle.setBounds(200,100,100,40);
+        cPane.add(gameTitle);*/
+        
+       
 		
 	}// ends slapsGame Method
 	 
